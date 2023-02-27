@@ -28,7 +28,6 @@ internal class MethodTracePluginTest : GradlePluginTest() {
     }
 
     @Test
-    @TestWithCache(true)
     @TestVersion(androidVersion = "7.2.0", gradleVersion = "7.4.1")
     fun buildTest() {
         testProjectSetup {

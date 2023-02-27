@@ -9,7 +9,9 @@ import com.android.build.gradle.AppPlugin
 import com.android.build.gradle.LibraryPlugin
 import com.jack.android.gradle.method.trace.asm.VisitScope
 import com.jack.android.gradle.method.trace.asm.methodtrace.MethodTraceAsmClassVisitorFactory
+import com.jack.android.gradle.method.trace.asm.methodtrace.MethodTraceParameters
 import com.jack.android.gradle.method.trace.asm.runcatch.RunCatchingAsmClassVisitorFactory
+import com.jack.android.gradle.method.trace.asm.runcatch.RunCatchingParameters
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.logging.Logger
@@ -71,15 +73,15 @@ class MethodTracePlugin : Plugin<Project> {
             variant.instrumentation.transformClassesWith(
                 MethodTraceAsmClassVisitorFactory::class.java,
                 InstrumentationScope.ALL
-            ) {
-                it.including.set(methodTrace.includes)
+            ) { parameters ->
+                initialMethodTraceParameter(methodTrace, parameters)
             }
         } else {
             variant.instrumentation.transformClassesWith(
                 MethodTraceAsmClassVisitorFactory::class.java,
                 InstrumentationScope.PROJECT
-            ) {
-                it.including.set(methodTrace.includes)
+            ) { parameters ->
+                initialMethodTraceParameter(methodTrace, parameters)
             }
         }
         variant.instrumentation.setAsmFramesComputationMode(
@@ -96,19 +98,49 @@ class MethodTracePlugin : Plugin<Project> {
             variant.instrumentation.transformClassesWith(
                 RunCatchingAsmClassVisitorFactory::class.java,
                 InstrumentationScope.ALL
-            ) {
-                it.including.set(runCaching.includes)
+            ) { parameters ->
+                initialRunCatchingParameter(runCaching, parameters)
             }
         } else {
             variant.instrumentation.transformClassesWith(
                 RunCatchingAsmClassVisitorFactory::class.java,
                 InstrumentationScope.PROJECT
-            ) {
-                it.including.set(runCaching.includes)
+            ) { parameters ->
+                initialRunCatchingParameter(runCaching, parameters)
             }
         }
         variant.instrumentation.setAsmFramesComputationMode(
             FramesComputationMode.COMPUTE_FRAMES_FOR_INSTRUMENTED_METHODS
         )
+    }
+
+    private fun initialMethodTraceParameter(
+        methodTrace: MethodTraceExtension.MethodTrace,
+        parameters: MethodTraceParameters
+    ) {
+        val includingClass = mutableMapOf<String, List<String>>()
+        val including = methodTrace.includes.get()
+        including.groupBy {
+            it.substringBefore("#")
+        }.forEach { (className, methods) ->
+            includingClass[className] = methods.map { it.substringAfter("#") }
+        }
+        parameters.including.set(including)
+        parameters.includingClass.set(includingClass)
+    }
+
+    private fun initialRunCatchingParameter(
+        runCaching: MethodTraceExtension.RunCatching,
+        parameters: RunCatchingParameters
+    ) {
+        val includingClass = mutableMapOf<String, List<String>>()
+        val including = runCaching.includes.get()
+        including.groupBy {
+            it.substringBefore("#")
+        }.forEach { (className, methods) ->
+            includingClass[className] = methods.map { it.substringAfter("#") }
+        }
+        parameters.including.set(including)
+        parameters.includingClass.set(includingClass)
     }
 }
