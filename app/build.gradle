@@ -1,0 +1,44 @@
+plugins {
+    id("com.android.application")
+    id("org.jetbrains.kotlin.android")
+}
+
+android {
+    namespace = "com.jack.android.gradle.method.trace.app"
+    compileSdk = 32
+
+    defaultConfig {
+        applicationId = "com.github.jackchen.method.analysis.example"
+        minSdk = 23
+        targetSdk = 32
+        versionCode = 1
+        versionName = "1.0"
+
+        testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+    buildFeatures {
+        viewBinding = true
+    }
+}
+repositories {
+    mavenCentral()
+    google()
+}
+dependencies {
+    implementation("androidx.appcompat:appcompat:1.2.0")
+    implementation("androidx.constraintlayout:constraintlayout:1.1.0")
+    implementation("androidx.core:core-ktx:1.0.1")
+
+    implementation "com.google.android.exoplayer:exoplayer:2.16.1"
+    implementation "com.google.android.exoplayer:exoplayer-ui:2.16.1"
+    implementation "com.google.android.exoplayer:extension-okhttp:2.16.1"
+
+    implementation(projects.methodTraceRuntime)
+}

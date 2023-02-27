@@ -1,0 +1,56 @@
+[versions]
+kotlin = "1.6.21"
+android-plugin = "7.2.0"
+gradleWrapper = "7.4.2"
+junit5 = "5.5.2"
+commons-io = "2.8.0"
+archUnit = "0.16.0"
+asm = "9.2"
+jdom2 = "2.0.5"
+gradle-test-toolkit = "1.0.3"
+gson = "2.8.9"
+sample-plugin = "2.0.0-SNAPSHOT"
+
+androidx-annotation="1.1.0"
+androidx-material="1.3.0"
+androidx-appcompat="1.2.0"
+androidx-constraintlayout="2.0.4"
+startup-runtime="1.0.0"
+recyclerview="1.1.0"
+
+core-ktx="1.3.2"
+
+junit="4.13.2"
+espresso-core="3.4.0"
+
+[libraries]
+android-gradle-plugin = { module = "com.android.tools.build:gradle", version.ref = "android-plugin" }
+kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
+kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
+kotlin-script-runtime = { module = "org.jetbrains.kotlin:kotlin-script-runtime", version.ref = "kotlin" }
+android-material = { module = "com.google.android.material:material", version.ref = "androidx-material" }
+androidx-ktx = { module = "androidx.core:core-ktx", version.ref = "core-ktx" }
+androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "androidx-annotation" }
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
+androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "androidx-constraintlayout" }
+androidx-recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "recyclerview" }
+androidx-startup-runtime = { module = "androidx.startup:startup-runtime", version.ref = "startup-runtime" }
+androidx-espresso = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso-core" }
+junit = { module = "junit:junit", version.ref = "junit" }
+junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit5" }
+gradle-test-toolkit = { module = "io.github.jackchen365:gradle-test-toolkit", version.ref = "gradle-test-toolkit" }
+commons-io = { module = "commons-io:commons-io", version.ref = "commons-io" }
+java-asm = { module = "org.ow2.asm:asm", version.ref = "asm" }
+java-asm-commons = { module = "org.ow2.asm:asm-commons", version.ref = "asm" }
+java-asm-util = { module = "org.ow2.asm:asm-util", version.ref = "asm" }
+jdom2 = { module = "org.jdom:jdom2", version.ref = "jdom2" }
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
+
+[plugins]
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+android-application = { id = "com.android.application", version.ref = "android-plugin" }
+android-library = { id = "com.android.library", version.ref = "android-plugin" }
+vanniktech-maven-publish = { id = "com.vanniktech.maven.publish", version = "0.21.0" }
+sample = { id = "io.github.jackchen365.sample", version.ref = "sample-plugin" }
