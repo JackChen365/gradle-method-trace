@@ -6,6 +6,7 @@ object MethodTrace {
     @JvmStatic
     fun onMethodEnter(
         identifier: Int,
+        clazz: Class<*>,
         ref: Any?,
         arguments: Array<Any?>?,
         methodName: String?
@@ -18,6 +19,7 @@ object MethodTrace {
     @JvmStatic
     fun onMethodExit(
         identifier: Int,
+        clazz: Class<*>,
         ref: Any?,
         arguments: Array<Any?>?,
         methodName: String?,
@@ -37,7 +39,7 @@ object MethodTrace {
     }
 
     @JvmStatic
-    fun onException(ref: Any?, methodName: String?, exception: Exception) {
+    fun onException(clazz: Class<*>, ref: Any?, methodName: String?, exception: Exception) {
         methodAnalyzers.forEach { methodAnalyzer ->
             methodAnalyzer.onException(ref, methodName, exception)
         }

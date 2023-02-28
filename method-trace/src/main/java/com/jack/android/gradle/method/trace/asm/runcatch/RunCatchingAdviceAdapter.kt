@@ -12,18 +12,21 @@ import org.objectweb.asm.commons.AdviceAdapter
 class RunCatchingAdviceAdapter(
     methodVisitor: MethodVisitor?,
     access: Int,
+    className: String,
     name: String?,
     desc: String?
 ) : AdviceAdapter(ASM7, methodVisitor, access, name, desc) {
     private var isStaticMethod = false
+    private var className: String
     private var methodName: String? = null
     private val startLabel = Label()
     private val endLabel = Label()
     private val handlerLabel = Label()
 
     init {
-        methodName = name
-        isStaticMethod = access and Opcodes.ACC_STATIC !== 0
+        this.methodName = name
+        this.className = className
+        this.isStaticMethod = access and Opcodes.ACC_STATIC !== 0
     }
 
     override fun visitCode() {
@@ -34,12 +37,13 @@ class RunCatchingAdviceAdapter(
     override fun visitMaxs(maxStack: Int, maxLocals: Int) {
         // (2) endLabel
         super.visitLabel(endLabel)
-
         // (3) handlerLabel
         super.visitLabel(handlerLabel)
         val localIndex = getLocalIndex()
         super.visitVarInsn(ASTORE, localIndex)
         super.visitVarInsn(ALOAD, localIndex)
+        // Class
+        super.visitLdcInsn(Type.getType("L$className;"));
         // This ref
         if (isStaticMethod) {
             super.visitInsn(ACONST_NULL)

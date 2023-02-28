@@ -1,6 +1,5 @@
 package com.jack.android.gradle.method.trace.asm.methodtrace
 
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.objectweb.asm.ClassReader
 import org.objectweb.asm.ClassWriter

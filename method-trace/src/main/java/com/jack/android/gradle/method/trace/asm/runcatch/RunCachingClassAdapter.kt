@@ -10,6 +10,20 @@ class RunCachingClassAdapter(
     private val includingMethods: List<String> = emptyList()
 ) : ClassVisitor(Opcodes.ASM7, classVisitor) {
 
+    private lateinit var className: String
+
+    override fun visit(
+        version: Int,
+        access: Int,
+        name: String,
+        signature: String?,
+        superName: String?,
+        interfaces: Array<out String>?
+    ) {
+        super.visit(version, access, name, signature, superName, interfaces)
+        this.className = name
+    }
+
     override fun visitMethod(
         access: Int,
         name: String,
@@ -26,7 +40,7 @@ class RunCachingClassAdapter(
         ) {
             mv
         } else {
-            RunCatchingAdviceAdapter(mv, access, name, desc)
+            RunCatchingAdviceAdapter(mv, access, className, name, desc)
         }
     }
 }

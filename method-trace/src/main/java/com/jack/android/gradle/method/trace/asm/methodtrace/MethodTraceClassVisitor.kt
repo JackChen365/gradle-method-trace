@@ -10,7 +10,7 @@ internal class MethodTraceClassVisitor(
     private val includingMethods: List<String> = emptyList()
 ) : ClassVisitor(Opcodes.ASM7, classVisitor) {
 
-    private var className: String? = null
+    private lateinit var className: String
     override fun visit(
         version: Int, access: Int, name: String, signature: String?,
         superName: String, interfaces: Array<String>
@@ -34,7 +34,7 @@ internal class MethodTraceClassVisitor(
         ) {
             mv
         } else {
-            MethodTraceMethodAdapterVisitor(mv, access, name, desc)
+            MethodTraceMethodAdapterVisitor(mv, access, className, name, desc)
         }
     }
 }

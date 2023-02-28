@@ -10,7 +10,10 @@ import org.objectweb.asm.Type
 import org.objectweb.asm.commons.AdviceAdapter
 
 internal class MethodTraceMethodAdapterVisitor constructor(
-    mv: MethodVisitor?, access: Int, private val methodName: String,
+    mv: MethodVisitor?,
+    access: Int,
+    private val className: String,
+    private val methodName: String,
     desc: String?
 ) : AdviceAdapter(ASM7, mv, access, methodName, desc) {
     private val isStaticMethod: Boolean
@@ -32,6 +35,8 @@ internal class MethodTraceMethodAdapterVisitor constructor(
         mv.visitVarInsn(ISTORE, idIdentifier)
         // Identifier
         mv.visitVarInsn(ILOAD, idIdentifier)
+        // Class
+        mv.visitLdcInsn(Type.getType("L$className;"))
         // This ref
         if (isStaticMethod) {
             mv.visitInsn(ACONST_NULL)
@@ -69,6 +74,8 @@ internal class MethodTraceMethodAdapterVisitor constructor(
         // Load variables for the method.
         // identifier
         mv.visitVarInsn(ILOAD, idIdentifier)
+        // Class
+        mv.visitLdcInsn(Type.getType("L$className;"));
         // This ref
         if (isStaticMethod) {
             mv.visitInsn(ACONST_NULL)
