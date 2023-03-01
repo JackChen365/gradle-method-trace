@@ -3,6 +3,7 @@ package com.jack.android.gradle.method.trace.runtime
 interface MethodAnalyzer {
     fun onMethodEnter(
         identifier: Int,
+        clazz: Class<*>,
         ref: Any?,
         arguments: Array<Any?>?,
         methodName: String?
@@ -10,6 +11,7 @@ interface MethodAnalyzer {
 
     fun onMethodExit(
         identifier: Int,
+        clazz: Class<*>,
         ref: Any?,
         arguments: Array<Any?>?,
         methodName: String?,
@@ -17,5 +19,5 @@ interface MethodAnalyzer {
         startTime: Long
     )
 
-    fun onException(ref: Any?, methodName: String?, exception: Exception)
+    fun onException(clazz: Class<*>,ref: Any?, methodName: String?, exception: Exception)
 }

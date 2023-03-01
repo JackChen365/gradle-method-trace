@@ -12,7 +12,7 @@ object MethodTrace {
         methodName: String?
     ) {
         methodAnalyzers.forEach { methodAnalyzer ->
-            methodAnalyzer.onMethodEnter(identifier, ref, arguments, methodName)
+            methodAnalyzer.onMethodEnter(identifier, clazz, ref, arguments, methodName)
         }
     }
 
@@ -29,6 +29,7 @@ object MethodTrace {
         methodAnalyzers.forEach { methodAnalyzer ->
             methodAnalyzer.onMethodExit(
                 identifier,
+                clazz,
                 ref,
                 arguments,
                 methodName,
@@ -41,12 +42,12 @@ object MethodTrace {
     @JvmStatic
     fun onException(clazz: Class<*>, ref: Any?, methodName: String?, exception: Exception) {
         methodAnalyzers.forEach { methodAnalyzer ->
-            methodAnalyzer.onException(ref, methodName, exception)
+            methodAnalyzer.onException(clazz, ref, methodName, exception)
         }
     }
 
     fun registerMethodAnalyzer(methodAnalyzer: MethodAnalyzer) {
-        if (methodAnalyzers.contains(methodAnalyzer)) {
+        if (!methodAnalyzers.contains(methodAnalyzer)) {
             methodAnalyzers.add(methodAnalyzer)
         }
     }

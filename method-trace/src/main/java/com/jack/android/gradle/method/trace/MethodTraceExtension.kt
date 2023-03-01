@@ -1,9 +1,11 @@
 package com.jack.android.gradle.method.trace
 
 import com.jack.android.gradle.method.trace.asm.VisitScope
+import groovy.lang.Closure
 import org.gradle.api.Project
 import org.gradle.api.provider.ListProperty
 import org.gradle.api.provider.Property
+import org.gradle.util.ConfigureUtil
 
 /**
  * Configuration object for [MethodTracePlugin].
@@ -17,15 +19,15 @@ open class MethodTraceExtension(private val project: Project) {
         methodTraceProperty.convention(MethodTrace(project))
     }
 
-    fun runCatching(scope: RunCatching.() -> Unit) {
+    fun catch(closure: Closure<RunCatching>) {
         val runCatching = RunCatching(project)
-        runCatching.apply(scope)
+        ConfigureUtil.configure(closure, runCatching)
         runCatchingProperty.set(runCatching)
     }
 
-    fun methodTrace(scope: MethodTrace.() -> Unit) {
+    fun trace(closure: Closure<MethodTrace>) {
         val methodTrace = MethodTrace(project)
-        methodTrace.apply(scope)
+        ConfigureUtil.configure(closure, methodTrace)
         methodTraceProperty.set(methodTrace)
     }
 

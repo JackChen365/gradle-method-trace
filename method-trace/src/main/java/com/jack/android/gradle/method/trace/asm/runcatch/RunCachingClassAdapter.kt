@@ -33,14 +33,12 @@ class RunCachingClassAdapter(
     ): MethodVisitor {
         val mv = super.visitMethod(access, name, desc, signature, exceptions)
         // We are not going to rewrite constructor
-        return if ("<init>" == name
-            || "<cinit>" == name
-            || includingAllMethods
+        return if (includingAllMethods
             || includingMethods.contains(name)
         ) {
-            mv
-        } else {
             RunCatchingAdviceAdapter(mv, access, className, name, desc)
+        } else {
+            mv
         }
     }
 }

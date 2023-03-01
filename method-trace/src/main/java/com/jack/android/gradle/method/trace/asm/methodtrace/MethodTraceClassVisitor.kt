@@ -27,14 +27,12 @@ internal class MethodTraceClassVisitor(
         exceptions: Array<String>?
     ): MethodVisitor {
         val mv = super.visitMethod(access, name, desc, signature, exceptions)
-        return if ("<init>" === name
-            || "<cinit>" === name
-            || includingAllMethods
+        return if (includingAllMethods
             || includingMethods.contains(name)
         ) {
-            mv
-        } else {
             MethodTraceMethodAdapterVisitor(mv, access, className, name, desc)
+        } else {
+            mv
         }
     }
 }
