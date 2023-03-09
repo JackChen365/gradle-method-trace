@@ -1,5 +1,7 @@
 package com.jack.android.gradle.method.trace.runtime
 
+import com.jack.android.gradle.method.trace.runtime.analyzer.MethodAnalyzer
+
 object MethodTrace {
     private val methodAnalyzers = mutableListOf<MethodAnalyzer>()
 

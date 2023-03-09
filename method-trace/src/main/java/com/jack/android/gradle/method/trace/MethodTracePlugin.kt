@@ -123,7 +123,7 @@ class MethodTracePlugin : Plugin<Project> {
         including.groupBy {
             it.substringBefore("#")
         }.forEach { (className, methods) ->
-            includingClass[className] = methods.map { it.substringAfter("#") }
+            includingClass[className] = methods.map { it.substringAfter("#", "") }
         }
         parameters.including.set(including)
         parameters.includingClass.set(includingClass)
@@ -138,7 +138,7 @@ class MethodTracePlugin : Plugin<Project> {
         including.groupBy {
             it.substringBefore("#")
         }.forEach { (className, methods) ->
-            includingClass[className] = methods.map { it.substringAfter("#") }
+            includingClass[className] = methods.map { it.substringAfter("#", "") }
         }
         parameters.including.set(including)
         parameters.includingClass.set(includingClass)
