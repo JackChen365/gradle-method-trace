@@ -126,7 +126,7 @@ class MethodTracePlugin : Plugin<Project> {
             includingClass[className] = methods.map { it.substringAfter("#", "") }
         }
         parameters.including.set(including)
-        parameters.includingClass.set(includingClass)
+        parameters.includingMethods.set(includingClass)
     }
 
     private fun initialRunCatchingParameter(

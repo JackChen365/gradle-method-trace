@@ -211,16 +211,40 @@ open class SimpleMethodAnalyzer : MethodAnalyzer {
         methodArguments: Array<Any?>?,
         parameters: Map<String, Any?>
     ): Array<Any?> {
-        var argumentIndex = 0
         val parameterValues = mutableListOf<Any?>()
         method.parameters.forEach { parameter ->
-            val value = parameters[parameter.name]
-            if (value == NULL_INSTANCE) {
-                parameterValues.add(null)
-            } else if (null != value) {
-                parameterValues.add(value)
-            } else {
-                parameterValues.add(methodArguments?.get(argumentIndex++))
+            parameter.annotations.forEach { annotation ->
+                when (annotation) {
+                    is ThisClass -> parameterValues.add(parameters[PARAMETER_CLAZZ])
+                    is ThisRef -> parameterValues.add(parameters[PARAMETER_REF])
+                    is MethodIdentifier -> parameterValues.add(parameters[PARAMETER_IDENTIFIER])
+                    is MethodName -> parameterValues.add(parameters[PARAMETER_METHOD_NAME])
+                    is MethodTime -> parameterValues.add(parameters[PARAMETER_START_TIME])
+                    is MethodResult -> parameterValues.add(parameters[PARAMETER_RESULT])
+                    is ArgException -> parameterValues.add(parameters[PARAMETER_EXCEPTION])
+                    is Arg1 -> parameterValues.add(methodArguments?.get(0))
+                    is Arg2 -> parameterValues.add(methodArguments?.get(1))
+                    is Arg3 -> parameterValues.add(methodArguments?.get(2))
+                    is Arg4 -> parameterValues.add(methodArguments?.get(3))
+                    is Arg5 -> parameterValues.add(methodArguments?.get(4))
+                    is Arg6 -> parameterValues.add(methodArguments?.get(5))
+                    is Arg7 -> parameterValues.add(methodArguments?.get(6))
+                    is Arg8 -> parameterValues.add(methodArguments?.get(7))
+                    is Arg9 -> parameterValues.add(methodArguments?.get(8))
+                    is Arg10 -> parameterValues.add(methodArguments?.get(9))
+                    is Arg11 -> parameterValues.add(methodArguments?.get(10))
+                    is Arg12 -> parameterValues.add(methodArguments?.get(11))
+                    is Arg13 -> parameterValues.add(methodArguments?.get(12))
+                    is Arg14 -> parameterValues.add(methodArguments?.get(13))
+                    is Arg15 -> parameterValues.add(methodArguments?.get(14))
+                    is Arg16 -> parameterValues.add(methodArguments?.get(15))
+                    is Arg17 -> parameterValues.add(methodArguments?.get(16))
+                    is Arg18 -> parameterValues.add(methodArguments?.get(17))
+                    is Arg19 -> parameterValues.add(methodArguments?.get(18))
+                    is Arg20 -> parameterValues.add(methodArguments?.get(19))
+                    is Arg21 -> parameterValues.add(methodArguments?.get(20))
+                    else -> error("Can not handle the annotation:$annotation.")
+                }
             }
         }
         return parameterValues.toTypedArray()
