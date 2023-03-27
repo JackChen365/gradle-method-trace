@@ -58,8 +58,8 @@ internal class MethodTracePluginTest : GradlePluginTest() {
                 |    }
                 |}
                 |methodTrace {
-                |   methodTrace {
-                |       including("com.android.test.MainActivity")
+                |   trace {
+                |       including("androidx.appcompat.app.AppCompatActivity*")
                 |   }
                 |}
                 |dependencies {

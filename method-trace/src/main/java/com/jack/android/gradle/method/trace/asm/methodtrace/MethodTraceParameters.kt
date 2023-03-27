@@ -9,5 +9,5 @@ abstract class MethodTraceParameters : InstrumentationParameters {
     @get:Input
     abstract val including: ListProperty<String>
     @get:Input
-    abstract val includingClass: MapProperty<String, List<String>>
+    abstract val includingMethods: MapProperty<String, List<String>>
 }

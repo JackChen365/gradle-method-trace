@@ -23,15 +23,15 @@ internal class SimpleMethodAnalyzerTest {
             }
 
             @JvmStatic
-            fun staticMethodWithResult(var1: String, var2: Int): String {
-                MethodTrace.onMethodEnter(123, Foo::class.java, null, arrayOf(var1, var2), "staticMethodWithResult")
+            fun staticMethodWithResult(var1: String, var2: Int, var3: Int): String {
+                MethodTrace.onMethodEnter(123, Foo::class.java, null, arrayOf(var1, var2, var3), "staticMethodWithResult")
                 println("invoke staticMethodWithResult")
                 var result = "Result"
                 MethodTrace.onMethodExit(
                     123,
                     Foo::class.java,
                     null,
-                    arrayOf(var1, var2),
+                    arrayOf(var1, var2, var3),
                     "staticMethodWithResult",
                     result,
                     System.currentTimeMillis()
@@ -61,27 +61,38 @@ internal class SimpleMethodAnalyzerTest {
 
     class FooMethodAnalyzer : SimpleMethodAnalyzer() {
         @MethodExit("Foo#staticMethod")
-        fun fun1(methodName: String) {
+        fun fun1(@MethodName methodName: String) {
             Assert.assertEquals("staticMethod", methodName)
         }
 
         @MethodExit("Foo#staticMethodWithResult")
-        fun fun2(methodName: String, result: String, var1: String, var2: Int) {
+        fun fun2(
+            @MethodName methodName: String,
+            @MethodResult result: String,
+            @Arg3 var3: Int
+        ) {
             Assert.assertEquals("staticMethodWithResult", methodName)
             Assert.assertEquals("Result", result)
-            Assert.assertEquals("123", var1)
-            Assert.assertEquals(123, var2)
+            Assert.assertEquals(456, var3)
         }
 
-        @MethodExit("Foo#testMethodWithResult")
-        fun fun3(ref: Any, result: String, var1: String) {
+        @MethodExit("Foo#testMethod")
+        fun fun3(
+            @ThisRef ref: Foo,
+            @MethodResult result: String,
+            @Arg1 var1: String
+        ) {
             Assert.assertNotNull(ref)
             Assert.assertEquals("Result", result)
             Assert.assertEquals("var2", var1)
         }
 
         @MethodExit("Foo#testMethodWithResult")
-        fun fun4(ref: Any, result: String, var1: String) {
+        fun fun4(
+            @ThisRef ref: Foo,
+            @MethodResult result: String,
+            @Arg1 var1: String
+        ) {
             Assert.assertNotNull(ref)
             Assert.assertEquals("Result", result)
             Assert.assertEquals("var2", var1)
@@ -93,7 +104,7 @@ internal class SimpleMethodAnalyzerTest {
         MethodTrace.registerMethodAnalyzer(FooMethodAnalyzer())
         val foo = Foo()
         Foo.staticMethod()
-        Foo.staticMethodWithResult("123", 123)
+        Foo.staticMethodWithResult("123", 123, 456)
         foo.testMethod("var1")
         foo.testMethodWithResult("var2")
     }

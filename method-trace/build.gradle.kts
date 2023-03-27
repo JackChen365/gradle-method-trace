@@ -52,12 +52,11 @@ repositories {
 }
 
 dependencies {
-    implementation(gradleApi())
-    implementation(libs.kotlin.gradle.plugin)
-    implementation(libs.android.gradle.plugin)
-    implementation(kotlin("stdlib-jdk8"))
-    implementation(libs.java.asm)
-    implementation(libs.java.asm.commons)
+    compileOnly(gradleApi())
+    compileOnly(libs.kotlin.gradle.plugin)
+    compileOnly(libs.android.gradle.plugin)
+    compileOnly(libs.java.asm)
+    compileOnly(libs.java.asm.commons)
 
     testImplementation(gradleTestKit())
     testImplementation(libs.junit.jupiter)
