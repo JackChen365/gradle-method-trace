@@ -1,12 +1,10 @@
 package com.jack.android.gradle.method.trace
 
 import com.jack.android.gradle.method.trace.asm.VisitScope
-import groovy.lang.Closure
 import org.gradle.api.Action
 import org.gradle.api.Project
 import org.gradle.api.provider.ListProperty
 import org.gradle.api.provider.Property
-import org.gradle.util.ConfigureUtil
 
 /**
  * Configuration object for [MethodTracePlugin].
@@ -55,6 +53,8 @@ open class MethodTraceExtension(private val project: Project) {
         val isEnabled: Property<Boolean> = project.objects.property(Boolean::class.java)
         val scope: Property<Int> = project.objects.property(Int::class.java)
         val includes: ListProperty<String> = project.objects.listProperty(String::class.java)
+        val includingSuperClass: ListProperty<String> = project.objects.listProperty(String::class.java)
+        val excludes: ListProperty<String> = project.objects.listProperty(String::class.java)
 
         init {
             scope.convention(VisitScope.ALL)
@@ -68,6 +68,22 @@ open class MethodTraceExtension(private val project: Project) {
         fun including(vararg list: String) {
             includes.addAll(list.toList())
         }
-    }
 
+        fun includingSuperClass(list: List<String>) {
+            includingSuperClass.addAll(list)
+        }
+
+        fun includingSuperClass(vararg list: String) {
+            includingSuperClass.addAll(list.toList())
+        }
+
+        fun excluding(list: List<String>) {
+            excludes.addAll(list)
+        }
+
+        fun excluding(vararg list: String) {
+            excludes.addAll(list.toList())
+        }
+
+    }
 }

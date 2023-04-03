@@ -1,10 +1,10 @@
 package com.jack.android.gradle.method.trace.asm.methodtrace
 
-import com.jack.android.gradle.method.trace.METHOD_ENTER_DESC
-import com.jack.android.gradle.method.trace.METHOD_EXIT_DESC
-import com.jack.android.gradle.method.trace.METHOD_ON_ENTER
-import com.jack.android.gradle.method.trace.METHOD_ON_EXIT
-import com.jack.android.gradle.method.trace.METHOD_TRACE_OWNER
+import extension.trace.METHOD_ENTER_DESC
+import extension.trace.METHOD_EXIT_DESC
+import extension.trace.METHOD_ON_ENTER
+import extension.trace.METHOD_ON_EXIT
+import extension.trace.METHOD_TRACE_OWNER
 import org.objectweb.asm.MethodVisitor
 import org.objectweb.asm.Type
 import org.objectweb.asm.commons.AdviceAdapter
